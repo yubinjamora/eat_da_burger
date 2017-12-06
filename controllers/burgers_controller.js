@@ -5,40 +5,41 @@ var router = express.Router();
 var burger = require("../models/burger.js");
 
 router.get("/", function(req, res) {
-    burger.selectAll(function(data) {
+    
+      res.redirect("/burgers");
+    
+  });
+
+  router.get("/burgers", function(req, res) {
+    
+    burger.all(function(data) {
       var hbsObject = {
-        burgers: data
+        burger_data: data
       };
       console.log(hbsObject);
       res.render("index", hbsObject);
     });
   });
   
-  router.post("/api/burgers", function(req, res) {
-    burger.insertOne([
-      "name", "devoured"
-    ], [
-      req.body.name, req.body.devoured
-    ], function(result) {
-      // Send back the ID of the new quote
-      res.json({ id: result.insertId });
+  router.post("/burgers/create", function(req, res) {
+    burger.create(req.body.name, function(result) {
+     
+      res.redirect("/");
     });
   });
   
-  router.put("/api/burgers/:id", function(req, res) {
+  router.put("/burgers/update", function(req, res) {
     var condition = "id = " + req.params.id;
   
     console.log("condition", condition);
   
-    burger.updateOne({
-      name: req.body.name
-    }, condition, function(result) {
-      res.json({ id: result.insertId })
+    burger.update(req.body.name, function(result) {
+      res.redirect("/");
     });
   });
   
   
   
-  // Export routes for server.js to use.
+  
   module.exports = router;
   
