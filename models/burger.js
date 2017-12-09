@@ -6,10 +6,9 @@ var burger = {
       cb(res);
     });
   },
-  // The variables cols and vals are arrays.
   create: function(name, cb) {
     orm.create("burgers", [
-      "name", "devoured"
+      "burger_name", "devoured"
     ], [
       name, false
     ], cb);
@@ -20,9 +19,6 @@ var burger = {
       devoured: true
     }, condition, cb);
   }
-
-  
 };
 
-// Export the database functions for the controller (catsController.js).
 module.exports = burger;
